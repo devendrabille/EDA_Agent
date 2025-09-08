@@ -23,14 +23,25 @@ if uploaded_file:
     st.subheader("Missing Values")
     st.write(df.isnull().sum())
 
-    st.subheader("Summary Statistics")
-    st.write(df.describe())
+    st.subheader("Summary Statistics (Numeric Columns Only)")
+    numeric_df = df.select_dtypes(include=['number'])
+    st.write(numeric_df.describe())
 
-    st.subheader("Correlation Matrix")
-    corr = df.corr()
+    st.subheader("Correlation Matrix (Numeric Columns Only)")
+    corr = numeric_df.corr()
     fig, ax = plt.subplots()
     sns.heatmap(corr, annot=True, cmap='coolwarm', ax=ax)
     st.pyplot(fig)
+
+    st.subheader("Categorical Feature Analysis")
+    categorical_df = df.select_dtypes(include=['object', 'category'])
+    for col in categorical_df.columns:
+        st.write(f"Value Counts for {col}:")
+        st.write(df[col].value_counts())
+        fig, ax = plt.subplots()
+        sns.countplot(x=col, data=df, ax=ax)
+        plt.xticks(rotation=45)
+        st.pyplot(fig)
 
     if 'price' in df.columns:
         st.subheader("Price Distribution")
