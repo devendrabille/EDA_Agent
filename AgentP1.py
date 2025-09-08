@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import io
 
 st.title("Agentic EDA Tool")
 st.write("Upload a CSV file to begin automated exploratory data analysis.")
@@ -14,9 +15,10 @@ if uploaded_file:
     st.dataframe(df.head())
 
     st.subheader("Basic Information")
-    buffer = []
+    buffer = io.StringIO()
     df.info(buf=buffer)
-    st.text("\n".join(buffer))
+    s = buffer.getvalue()
+    st.text(s)
 
     st.subheader("Missing Values")
     st.write(df.isnull().sum())
