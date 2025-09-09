@@ -5,3 +5,5 @@ seaborn
 reportlab
 sweetviz
 streamlit
+scikit-learn
+plotly
