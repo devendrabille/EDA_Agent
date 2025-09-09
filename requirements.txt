@@ -1,4 +1,7 @@
-streamlit
 pandas
-seaborn
+numpy
 matplotlib
+seaborn
+reportlab
+sweetviz
+streamlit
